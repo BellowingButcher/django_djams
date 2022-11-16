@@ -16,6 +16,7 @@ class SongsAPIView(APIView):
     
     # read operation for Songs
     def get(self, request, pk=None, format=None):
+        print('hello')
         if pk:
             data = self.get_object(pk)
             serializer = SongsSerializer(data)
@@ -23,7 +24,7 @@ class SongsAPIView(APIView):
             data = Songs.objects.all()
             serializer = SongsSerializer(data, many=True)
 
-            return Response(serializer.data)
+        return Response(serializer.data)
 
     # create operation
     def post(self, request, format=None):

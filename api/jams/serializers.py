@@ -8,7 +8,7 @@ class SongsSerializer(serializers.ModelSerializer):
 
 class ArtistsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Artist
+        model = Artists
         fields = '__all__'
 
 class GenresSerializer(serializers.ModelSerializer):
