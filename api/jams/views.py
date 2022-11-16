@@ -2,9 +2,27 @@ from django.shortcuts import render
 from django.http.response import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Songs
-from .serializers import SongsSerializer
+from .models import Songs, Artists
+from .serializers import SongsSerializer, ArtistsSerializer
 # Create views here.
+
+class ArtistsAPIView(APIView):
+    def get_object(self, pk):
+        try:
+            return Artists.objects.get(pk=pk)
+        except Artists.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk=None, format=None):
+        if pk:
+            data = Artists.objects.get_object(pk)
+            serializer = ArtistsSerializer(data)
+        else:
+            data = Artists.objects.all()
+            serializer = ArtistsSerializer(data, many=True)
+        
+        return Response(serializer.data)
+
 
 # https://www.youtube.com/watch?v=x-0xWAJR3Fw This is the first video I watched to start building my viewset
 class SongsAPIView(APIView):
@@ -17,7 +35,6 @@ class SongsAPIView(APIView):
     
     # read operation for Songs
     def get(self, request, pk=None, format=None):
-        print('hello')
         if pk:
             data = self.get_object(pk)
             serializer = SongsSerializer(data)
