@@ -30,3 +30,8 @@ class ManagersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Managers
         fields = '__all__'
+
+class AlbumsSongsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AlbumsSongs
+        fields = '__all__'
