@@ -30,3 +30,6 @@ class AlbumsSongs(models.Model):
     song_id = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
     album_id = models.ForeignKey(Albums, default=None, on_delete=models.CASCADE)
 
+class ArtistsSongs(models.Model):
+    song_id = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
+    artist_id = models.ForeignKey(Artists, default=None, on_delete=models.CASCADE)
