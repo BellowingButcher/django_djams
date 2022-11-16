@@ -70,22 +70,21 @@ class SongsAPIView(APIView):
 
         return response
     
-    # def delete()
-    # def delete(self, request, pk=None, format=None):
-    #     song_to_delete = Songs.objects.get(pk=pk)
-    #     data = request.data
-    #     serializer = SongsSerializer(instance=song_to_delete, data=data)
+    # def delete
+    def delete(self, request, pk, format=None):
+        song_to_delete = self.get_object(pk=pk)
 
-    #     # validation
-    #     serializer.is_valid(raise_exception=True)
+        data = self.get_object(pk)
+        serializer = SongsSerializer(data)
 
-    #     # save delete
-    #     serializer.save()
+        response = Response()
 
-    #     # inform the front end
-    #     response = Response()
+        # inform the front end
         
-    #     response.data = {
-    #         'message': 'Deletion successful',
-    #         'data': serializer.data,
-    #     }
+        response.data = {
+            'message': 'Deletion successful',
+            'data': serializer.data,
+        }
+
+        song_to_delete.delete()
+        return response
