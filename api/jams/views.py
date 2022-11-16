@@ -13,6 +13,7 @@ class SongsAPIView(APIView):
             return Songs.objects.get(pk=pk)
         except Songs.DoesNotExist:
             raise Http404
+
     
     # read operation for Songs
     def get(self, request, pk=None, format=None):
@@ -41,10 +42,50 @@ class SongsAPIView(APIView):
         response = Response()
 
         response.data = {
-            'message': 'Song Created Successfully',
+            'message': 'Song Created successfully',
             'data': serializer.data,
         }
 
         return response
-    # def put()/patch()
+
+    # def put()/patch() for updating songs
+    def put(self, request, pk=None, format=None):
+        song_to_update = Songs.objects.get(pk=pk)
+        data = request.data
+        serializer = SongsSerializer(instance=song_to_update, data=data, partial=True)
+
+        #validation
+        serializer.is_valid(raise_exception=True)
+
+        # save update
+        serializer.save()
+
+        # Inform the front end
+        response = Response()
+
+        response.data = {
+            'message': 'Song updated successfully',
+            'data': serializer.data,
+        }
+
+        return response
+    
     # def delete()
+    # def delete(self, request, pk=None, format=None):
+    #     song_to_delete = Songs.objects.get(pk=pk)
+    #     data = request.data
+    #     serializer = SongsSerializer(instance=song_to_delete, data=data)
+
+    #     # validation
+    #     serializer.is_valid(raise_exception=True)
+
+    #     # save delete
+    #     serializer.save()
+
+    #     # inform the front end
+    #     response = Response()
+        
+    #     response.data = {
+    #         'message': 'Deletion successful',
+    #         'data': serializer.data,
+    #     }
