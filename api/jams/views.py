@@ -6,6 +6,7 @@ from .models import Songs
 from .serializers import SongsSerializer
 # Create your views here.
 
+# https://www.youtube.com/watch?v=x-0xWAJR3Fw This is the first video I watched to start building my viewset
 class SongsAPIView(APIView):
     def get_object(self, pk):
         try:
