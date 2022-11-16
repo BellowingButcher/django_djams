@@ -4,6 +4,7 @@ class Songs(models.Model):
     title = models.CharField(max_length=50)
     duration = models.FloatField(default=0)
     plays = models.BigIntegerField(default=0)
+    is_explicit = models.BooleanField(default=False)
 
 class Artists(models.Model):
     name = models.CharField(max_length=50, unique=True)
