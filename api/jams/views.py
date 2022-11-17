@@ -24,7 +24,7 @@ class ArtistsAPIView(APIView):
         
         return Response(serializer.data)
 
-    # create operation
+    # create artist
     def post(self, request, format=None):
         data = request.data
         serializer = ArtistsSerializer(data=data)
@@ -39,7 +39,7 @@ class ArtistsAPIView(APIView):
             'data': serializer.data
         }
         return response
-
+    # update existing artist
     def put(self, request, pk=None, format=None):
         Artist_to_update = Artists.objects.get(pk=pk)
         data = request.data
@@ -55,6 +55,24 @@ class ArtistsAPIView(APIView):
             'data': serializer.data,
         }
 
+        return response
+    # delete artist
+    def delete(self, request, pk, format=None):
+        artist_to_delete = self.get_object(pk=pk)
+
+        data = self.get_object(pk)
+        serializer = ArtistsSerializer(data)
+
+        response = Response()
+
+        # inform the front end
+        
+        response.data = {
+            'message': 'Deletion successful',
+            'data': serializer.data,
+        }
+
+        artist_to_delete.delete()
         return response
 
 
