@@ -34,6 +34,11 @@ class ManagersAPI(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        manager = self.get_object(pk)
+        manager.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # artist viewset
