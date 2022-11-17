@@ -28,15 +28,15 @@ class ArtistsManagers(models.Model):
     manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
 
 class AlbumsSongs(models.Model):
-    song_id = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
-    album_id = models.ForeignKey(Albums, default=None, on_delete=models.CASCADE)
+    song = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
+    album = models.ForeignKey(Albums, default=None, on_delete=models.CASCADE)
 
 class ArtistsSongs(models.Model):
-    song_id = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
-    artist_id = models.ForeignKey(Artists, default=None, on_delete=models.CASCADE)
+    song = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artists, default=None, on_delete=models.CASCADE)
 
 class PlaylistsSongs(models.Model):
-    song_id = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
-    playlist_id = models.ForeignKey(Playlists, default=None, on_delete=models.CASCADE)
+    song = models.ForeignKey(Songs, default=None, on_delete=models.CASCADE)
+    playlist = models.ForeignKey(Playlists, default=None, on_delete=models.CASCADE)
 
 
