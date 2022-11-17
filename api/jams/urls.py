@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import SongsAPIView, ArtistsAPIView, ManagersAPIView
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('songs/', SongsAPIView.as_view()),
@@ -9,3 +10,5 @@ urlpatterns = [
     path('managers/', ManagersAPIView.as_view()),
     path('managers/<str:pk>/', ManagersAPIView.as_view())
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
