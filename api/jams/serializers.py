@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Songs, Artists, Genres, Albums, Playlists, AlbumsSongs, ArtistsSongs, PlaylistsSongs #Managers,
+from .models import Songs, Artists, Genres, Albums, Playlists, AlbumsSongs, ArtistsSongs, PlaylistsSongs, Managers
 
 class SongsSerializer(serializers.ModelSerializer):
     class Meta:

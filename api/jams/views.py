@@ -4,41 +4,52 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Songs, Artists, Managers
 from .serializers import SongsSerializer, ArtistsSerializer, ManagersSerializer
-from rest_framework import status
+from rest_framework import status, generics
 # Create views here.
 
-# managers list all managers or add a new manager
-class ManagersAPIView(APIView):
-    def get_object(self, pk):
-        try:
-            return Managers.objects.get(pk=pk)
-        except Managers.DoesNotExist:
-            raise Http404
+# refactoring views to use mixins generic views 
+# this class is specifically for reading, creating, and updating functionality
+class ManagersList(generics.ListCreateAPIView):
+    queryset = Managers.objects.all()
+    serializer_class = ManagersSerializer
 
-    def get(self, request, format=None):
-        managers = Managers.objects.all()
-        serializer = ManagersSerializer(snippets, many=True)
-        return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = ManagersSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ManagersDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Managers.objects.all()
+    serializer_class = ManagersSerializer
 
-    def put(self, request, pk, format=None):
-        manager = self.get_object(pk)
-        serializer = ManagersSerializer(snippet, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# managers crud functionality done
+# class ManagersAPIView(APIView):
+#     def get_object(self, pk):
+#         try:
+#             return Managers.objects.get(pk=pk)
+#         except Managers.DoesNotExist:
+#             raise Http404
+
+#     def get(self, request, format=None):
+#         managers = Managers.objects.all()
+#         serializer = ManagersSerializer(snippets, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request, format=None):
+#         serializer = ManagersSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     def put(self, request, pk, format=None):
+#         manager = self.get_object(pk)
+#         serializer = ManagersSerializer(snippet, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, pk, format=None):
-        manager = self.get_object(pk)
-        manager.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def delete(self, request, pk, format=None):
+#         manager = self.get_object(pk)
+#         manager.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # artist viewset
