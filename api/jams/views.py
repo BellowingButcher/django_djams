@@ -8,7 +8,7 @@ from rest_framework import status
 # Create views here.
 
 # managers list all managers or add a new manager
-class ManagersAPI(APIView):
+class ManagersAPIView(APIView):
     def get_object(self, pk):
         try:
             return Managers.objects.get(pk=pk)
