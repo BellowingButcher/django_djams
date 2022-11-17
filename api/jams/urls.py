@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SongsAPIView, ArtistsAPIView, ManagersList, ManagersDetail, AlbumsList, AlbumsDetail, PlaylistsList, PlaylistsDetail
+from .views import SongsAPIView, ArtistsAPIView, ManagersList, ManagersDetail, AlbumsList, AlbumsDetail, PlaylistsList, PlaylistsDetail, GenresDetail, GenresList
 from rest_framework.urlpatterns import format_suffix_patterns
 # ManagersAPIView,
 urlpatterns = [
@@ -14,7 +14,9 @@ urlpatterns = [
     path('albums/', AlbumsList.as_view()),
     path('albums/<str:pk>', AlbumsDetail.as_view()),
     path('playlists/', PlaylistsList.as_view()),
-    path('playlists/<str:pk>', PlaylistsDetail.as_view())
+    path('playlists/<str:pk>', PlaylistsDetail.as_view()),
+    path('genres/', GenresList.as_view()),
+    path('genres/<str:pk>', GenresDetail.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
