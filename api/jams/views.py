@@ -15,13 +15,29 @@ class ArtistsAPIView(APIView):
     
     def get(self, request, pk=None, format=None):
         if pk:
-            data = Artists.objects.get_object(pk)
+            data = self.get_object(pk)
             serializer = ArtistsSerializer(data)
         else:
             data = Artists.objects.all()
             serializer = ArtistsSerializer(data, many=True)
         
         return Response(serializer.data)
+
+    # create operation
+    def post(self, request, format=None):
+        data = request.data
+        serializer = ArtistsSerializer(data=data)
+    # validate the data
+        serializer.is_valid(raise_exception=True)
+    # save the creation
+        serializer.save()
+    # inform front end of creation
+        response = Response()
+        response.data = {
+            'message': 'Artist added successfully',
+            'data': serializer.data
+        }
+        return response
 
 
 # https://www.youtube.com/watch?v=x-0xWAJR3Fw This is the first video I watched to start building my viewset

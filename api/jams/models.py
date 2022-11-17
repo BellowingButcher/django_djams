@@ -8,7 +8,7 @@ class Songs(models.Model):
 class Artists(models.Model):
     name = models.CharField(max_length=50, unique=True)
     bio = models.TextField(default='Bio goes here')
-    img_url = models.URLField(max_length=200, default=None)
+    img_url = models.URLField(max_length=200, default=None, null=True)
     # manager = models.ForeignKey('Managers', default=None, on_delete=models.CASCADE)
 
 class Genres(models.Model):
