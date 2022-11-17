@@ -2,10 +2,41 @@ from django.shortcuts import render
 from django.http.response import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Songs, Artists
-from .serializers import SongsSerializer, ArtistsSerializer
+from .models import Songs, Artists, Managers
+from .serializers import SongsSerializer, ArtistsSerializer, ManagersSerializer
+from rest_framework import status
 # Create views here.
 
+# managers list all managers or add a new manager
+class ManagersAPI(APIView):
+    def get_object(self, pk):
+        try:
+            return Managers.objects.get(pk=pk)
+        except Managers.DoesNotExist:
+            raise Http404
+
+    def get(self, request, format=None):
+        managers = Managers.objects.all()
+        serializer = ManagersSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ManagersSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        manager = self.get_object(pk)
+        serializer = ManagersSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# artist viewset
 class ArtistsAPIView(APIView):
     
     def get_object(self, pk):
