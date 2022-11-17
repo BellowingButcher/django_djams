@@ -27,10 +27,10 @@ class PlaylistsSerializer(serializers.ModelSerializer):
         model = Playlists
         fields = '__all__'
 
-# class ManagersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Managers
-#         fields = '__all__'
+class ManagersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Managers
+        fields = '__all__'
 
 class AlbumsSongsSerializer(serializers.ModelSerializer):
     class Meta:
