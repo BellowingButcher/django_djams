@@ -2,13 +2,22 @@ from django.shortcuts import render
 from django.http.response import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Songs, Artists, Managers, Albums, Playlists, Genres
-from .serializers import SongsSerializer, ArtistsSerializer, ManagersSerializer, AlbumsSerializer, PlaylistsSerializer, GenresSerializer
+from .models import Songs, Artists, Managers, Albums, Playlists, Genres, ArtistsSongs
+from .serializers import SongsSerializer, ArtistsSerializer, ManagersSerializer, AlbumsSerializer, PlaylistsSerializer, GenresSerializer, ArtistsSongsSerializer
 from rest_framework import status, generics
 # Create views here.
 
 # refactoring views to use mixins generic views 
 # this class is specifically for reading, creating, and updating functionality
+class ArtistsSongsList(generics.ListCreateAPIView):
+    queryset = ArtistsSongs.objects.all()
+    serializer_class = ArtistsSongsSerializer
+
+class ArtistsSongsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArtistsSongs.objects.all()
+    serializer_class = ArtistsSongsSerializer
+
+
 class GenresList(generics.ListCreateAPIView):
     queryset = Genres.objects.all()
     serializer_class = GenresSerializer
