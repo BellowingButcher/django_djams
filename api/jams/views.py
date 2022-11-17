@@ -7,6 +7,7 @@ from .serializers import SongsSerializer, ArtistsSerializer
 # Create views here.
 
 class ArtistsAPIView(APIView):
+    
     def get_object(self, pk):
         try:
             return Artists.objects.get(pk=pk)
@@ -39,6 +40,23 @@ class ArtistsAPIView(APIView):
         }
         return response
 
+    def put(self, request, pk=None, format=None):
+        Artist_to_update = Artists.objects.get(pk=pk)
+        data = request.data
+        serializer = ArtistsSerializer(instance=Artist_to_update, data=data, partial=True)
+        #validation
+        serializer.is_valid(raise_exception=True)
+        # save update
+        serializer.save()
+        # Inform the front end
+        response = Response()
+        response.data = {
+            'message': 'Artist updated successfully',
+            'data': serializer.data,
+        }
+
+        return response
+
 
 # https://www.youtube.com/watch?v=x-0xWAJR3Fw This is the first video I watched to start building my viewset
 class SongsAPIView(APIView):
@@ -60,7 +78,7 @@ class SongsAPIView(APIView):
 
         return Response(serializer.data)
 
-    # create operation
+    # create operation for Songs
     def post(self, request, format=None):
         data = request.data
         serializer = SongsSerializer(data=data)
